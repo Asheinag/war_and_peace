@@ -2,13 +2,14 @@ import re
 
 
 def counter(path):
-    file = open(path, 'r')
-
+    file = open(path, 'rt')
     book_text = file.read()
     file.close()
+
     book_text = book_text.lower()
     book_text = re.sub("\W|\d", " ", book_text)
     book_text = re.sub("\s+", " ", book_text)
+
     wordlist = book_text.split(' ')
     diction = {}
     for word in wordlist:
@@ -18,4 +19,15 @@ def counter(path):
             diction[word] += 1
 
     return diction
+
+
+def table_maker(diction):
+    output_file = open('output.txt', 'wt')
+    for item in sorted(diction):
+        s = '{0} - {1}\n'.format(item, diction[item])
+        output_file.write(s)
+    output_file.close()
+
+wap = counter('D:/Projects/war_and_peace/wap/wap.txt')
+table_maker(wap)
 
